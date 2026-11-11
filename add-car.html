@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX DRIVE - Heavy & Luxury Car Rental | Page 6: Add Car</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Pro Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#090d16] text-gray-100 antialiased selection:bg-amber-500 selection:text-black">
+
+  <!-- Global Header Navigation -->
+  <header id="global-nav"></header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    
+    <!-- Page Header -->
+    <div class="mb-8 pb-6 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 mb-1">
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+          PAGE 6 OF 8: FLEET ACQUISITION - ADD NEW VEHICLE
+        </div>
+        <h1 class="font-heading text-3xl sm:text-4xl font-extrabold text-white">
+          Add New Vehicle to Fleet
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-400 mt-1">
+          Relational schema insertion into <code class="text-amber-300">Cars</code> table with <code class="text-amber-300">reg_no (UNIQUE)</code> and <code class="text-amber-300">type_id (FK)</code> constraint verification.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="btn-secondary px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2">
+          <i class="fa-solid fa-list"></i> View All Fleet (${window.db ? window.db.getCars().length : 12})
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Grid: Form (8 Cols) & Live Preview (4 Cols) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- LEFT: Form -->
+      <div class="lg:col-span-8 glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
+        
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <h2 class="font-heading text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-car-tunnel text-cyan-400"></i> Vehicle Specifications & Registration
+          </h2>
+          <span class="text-xs text-cyan-300 font-mono">Fleet Management System</span>
+        </div>
+
+        <!-- Quick Heavy Car Presets -->
+        <div class="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+          <div class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-2">
+            <i class="fa-solid fa-bolt"></i> Quick Autofill Heavy & Luxury Presets:
+          </div>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <button type="button" onclick="loadPreset('lc300')" class="px-3 py-1.5 rounded-lg bg-black/50 hover:bg-amber-500 hover:text-black border border-white/10 text-gray-300 transition-colors">
+              + Land Cruiser LC300 ZX
+            </button>
+            <button type="button" onclick="loadPreset('gwagon')" class="px-3 py-1.5 rounded-lg bg-black/50 hover:bg-amber-500 hover:text-black border border-white/10 text-gray-300 transition-colors">
+              + G-Wagon G63 AMG
+            </button>
+            <button type="button" onclick="loadPreset('defender')" class="px-3 py-1.5 rounded-lg bg-black/50 hover:bg-amber-500 hover:text-black border border-white/10 text-gray-300 transition-colors">
+              + Defender 110 V8
+            </button>
+            <button type="button" onclick="loadPreset('sclass')" class="px-3 py-1.5 rounded-lg bg-black/50 hover:bg-amber-500 hover:text-black border border-white/10 text-gray-300 transition-colors">
+              + Mercedes S-Class S580
+            </button>
+          </div>
+        </div>
+
+        <form id="addCarForm" class="space-y-5">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- Model Name -->
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Car Model & Trim Name <span class="text-rose-400">*</span>
+              </label>
+              <input type="text" id="addModel" placeholder="e.g. Toyota Land Cruiser 300 ZX V6 Twin-Turbo" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400" required>
+            </div>
+
+            <!-- Car Type FK -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center justify-between">
+                <span>Vehicle Type <span class="text-rose-400">*</span></span>
+                <span class="text-[10px] text-gray-400 font-mono">FK to Car_Types</span>
+              </label>
+              <select id="addTypeId" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400" required>
+                <!-- Filled by JS -->
+              </select>
+            </div>
+
+            <!-- Registration Number (UNIQUE) -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center justify-between">
+                <span>Registration / Plate No <span class="text-rose-400">*</span></span>
+                <span class="text-[10px] text-amber-400 font-mono">UNIQUE CONSTRAINT</span>
+              </label>
+              <input type="text" id="addRegNo" placeholder="e.g. ISB-LC-786" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 font-mono uppercase" required>
+            </div>
+
+            <!-- Model Year -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Manufacturing Year <span class="text-rose-400">*</span>
+              </label>
+              <input type="number" id="addYear" value="2024" min="2018" max="2027" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 font-mono" required>
+            </div>
+
+            <!-- Initial Status -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Initial Status (<code class="text-cyan-300">status IN ('Available', 'Maintenance')</code>)
+              </label>
+              <select id="addStatus" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400">
+                <option value="Available">Available (Ready for immediate rent)</option>
+                <option value="Maintenance">Maintenance (Workshop check required)</option>
+              </select>
+            </div>
+
+            <!-- Passenger Seats -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Seating Capacity (e.g. 7 for Heavy SUV)
+              </label>
+              <input type="number" id="addSeats" value="7" min="2" max="12" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 font-mono">
+            </div>
+
+            <!-- Initial Mileage -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Current Odometer Mileage (KM)
+              </label>
+              <input type="number" id="addMileage" value="12000" min="0" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 font-mono">
+            </div>
+
+            <!-- Transmission & Fuel -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Transmission
+              </label>
+              <input type="text" id="addTransmission" value="10-Speed Automatic" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Fuel & Engine Spec
+              </label>
+              <input type="text" id="addFuel" value="Twin-Turbo V6 Petrol" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400">
+            </div>
+
+            <!-- Horsepower & Drive -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Horsepower / Output
+              </label>
+              <input type="text" id="addHorsepower" value="409 HP" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Drivetrain / Chassis Tag
+              </label>
+              <input type="text" id="addTag" value="Heavy Luxury 4x4" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400">
+            </div>
+
+            <!-- High-Res Image URL -->
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                High-Resolution Image URL
+              </label>
+              <input type="url" id="addImage" value="https://images.unsplash.com/photo-1594502184342-2e12f877aa73?auto=format&fit=crop&w=1200&q=80" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400" required>
+            </div>
+
+            <!-- Description -->
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Vehicle Overview & Features
+              </label>
+              <textarea id="addDescription" rows="3" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400">Heavy luxury off-road flagship with adaptive variable suspension, multi-terrain select, 4WD differential locks, and executive rear passenger seating.</textarea>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black py-4 px-6 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-cyan-500/20 hover:from-cyan-400 hover:to-blue-500 transition-all">
+            <i class="fa-solid fa-plus-circle"></i> Save & Register Vehicle to Fleet
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- RIGHT: Live Card Preview -->
+      <div class="lg:col-span-4 space-y-6">
+        <div class="sticky top-28 space-y-4">
+          <div class="text-xs uppercase font-extrabold tracking-widest text-cyan-400 flex items-center gap-2">
+            <i class="fa-solid fa-eye"></i> Real-Time Card Preview
+          </div>
+
+          <div class="glass-card rounded-3xl overflow-hidden border border-cyan-500/30">
+            <div class="relative h-56 bg-black/40 overflow-hidden">
+              <img id="prevImg" src="https://images.unsplash.com/photo-1594502184342-2e12f877aa73?auto=format&fit=crop&w=1200&q=80" alt="Preview" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-black/30"></div>
+              
+              <div class="absolute top-4 left-4 flex flex-col gap-1">
+                <span id="prevType" class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase bg-black/70 backdrop-blur-md text-white border border-white/20">
+                  Heavy 4x4 / Luxury SUV
+                </span>
+                <span id="prevTag" class="px-2.5 py-0.5 rounded-md text-[10px] font-extrabold bg-amber-500 text-black">
+                  Heavy Luxury 4x4
+                </span>
+              </div>
+
+              <div class="absolute top-4 right-4">
+                <span id="prevStatus" class="px-3 py-1 rounded-full text-[10px] font-bold badge-available backdrop-blur-md">
+                  Available
+                </span>
+              </div>
+
+              <div class="absolute bottom-3 right-4 px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md border border-white/15 text-[11px] font-mono text-cyan-300">
+                <span id="prevReg">ISB-LC-786</span>
+              </div>
+            </div>
+
+            <div class="p-5 space-y-3">
+              <div class="flex justify-between items-center text-xs text-gray-400">
+                <span id="prevYear">Year 2024</span>
+                <span id="prevHP" class="text-amber-400 font-bold">409 HP</span>
+              </div>
+              <h3 id="prevModel" class="font-heading text-lg font-bold text-white truncate">
+                Toyota Land Cruiser 300 ZX
+              </h3>
+              <p id="prevDesc" class="text-xs text-gray-400 line-clamp-2">
+                Heavy luxury off-road flagship with adaptive variable suspension.
+              </p>
+
+              <div class="pt-3 border-t border-white/10 flex justify-between items-center">
+                <div>
+                  <div class="text-[10px] uppercase font-bold text-gray-400">Estimated Rate</div>
+                  <div id="prevPrice" class="font-heading text-xl font-black text-amber-400">$280<span class="text-xs font-normal text-gray-400">/day</span></div>
+                </div>
+                <span class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-gray-300">
+                  Ready to Rent
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-[11px] text-gray-400 text-center">
+            Once saved, this vehicle will be immediately searchable in Page 1 and bookable across the platform.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Recently Added Fleet Section -->
+    <div class="mt-16 glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
+      <h3 class="font-heading text-xl font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-clock-rotate-left text-cyan-400"></i> Recently Added Vehicles in Database
+      </h3>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left">
+          <thead>
+            <tr class="border-b border-white/10 text-gray-400 uppercase text-[10px]">
+              <th class="py-3">Vehicle Model</th>
+              <th class="py-3">Reg No (UNIQUE)</th>
+              <th class="py-3">Type</th>
+              <th class="py-3">Seats</th>
+              <th class="py-3">Daily Tariff</th>
+              <th class="py-3">Status</th>
+              <th class="py-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="recentCarsTableBody" class="divide-y divide-white/5 text-gray-300">
+            <!-- Injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer id="global-footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHeader('add-car');
+      renderFooter();
+      initAddCarPage();
+    });
+
+    const PRESETS = {
+      lc300: {
+        model: 'Toyota Land Cruiser 300 ZX V6 Twin-Turbo',
+        type_id: 1,
+        reg_no: 'ISB-LC-' + Math.floor(100 + Math.random() * 900),
+        year: 2024,
+        seats: 7,
+        mileage: 8500,
+        horsepower: '409 HP',
+        tag: 'Heavy Luxury 4x4',
+        image: 'https://images.unsplash.com/photo-1594502184342-2e12f877aa73?auto=format&fit=crop&w=1200&q=80',
+        description: 'Heavy luxury 7-seater SUV with twin-turbo performance and multi-terrain diff-lock.'
+      },
+      gwagon: {
+        model: 'Mercedes-Benz G63 AMG Biturbo',
+        type_id: 1,
+        reg_no: 'LHR-GW-' + Math.floor(100 + Math.random() * 900),
+        year: 2024,
+        seats: 5,
+        mileage: 6200,
+        horsepower: '577 HP',
+        tag: 'Heavy Performance Icon',
+        image: 'https://images.unsplash.com/photo-1520050206274-a1ae44613e6d?auto=format&fit=crop&w=1200&q=80',
+        description: 'Military heavy styling with handcrafted twin-turbo AMG V8 exhaust note.'
+      },
+      defender: {
+        model: 'Land Rover Defender 110 X-Dynamic',
+        type_id: 1,
+        reg_no: 'PES-DEF-' + Math.floor(100 + Math.random() * 900),
+        year: 2024,
+        seats: 7,
+        mileage: 11400,
+        horsepower: '395 HP',
+        tag: 'Heavy Off-Road Luxury',
+        image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80',
+        description: 'Rugged heavy expedition SUV with modern high-tech poise and 3D terrain cameras.'
+      },
+      sclass: {
+        model: 'Mercedes-Benz S580 4MATIC Executive',
+        type_id: 2,
+        reg_no: 'ISB-BENZ-' + Math.floor(100 + Math.random() * 900),
+        year: 2024,
+        seats: 5,
+        mileage: 9100,
+        horsepower: '496 HP',
+        tag: 'Executive Flagship',
+        image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80',
+        description: 'First class German executive luxury sedan with active rear massage seats.'
+      }
+    };
+
+    function loadPreset(key) {
+      const p = PRESETS[key];
+      if (!p) return;
+
+      document.getElementById('addModel').value = p.model;
+      document.getElementById('addTypeId').value = p.type_id;
+      document.getElementById('addRegNo').value = p.reg_no;
+      document.getElementById('addYear').value = p.year;
+      document.getElementById('addSeats').value = p.seats;
+      document.getElementById('addMileage').value = p.mileage;
+      document.getElementById('addHorsepower').value = p.horsepower;
+      document.getElementById('addTag').value = p.tag;
+      document.getElementById('addImage').value = p.image;
+      document.getElementById('addDescription').value = p.description;
+
+      updateLivePreview();
+    }
+
+    function initAddCarPage() {
+      // 1. Fill Car Types Dropdown
+      const types = window.db.getCarTypes();
+      const typeSelect = document.getElementById('addTypeId');
+      typeSelect.innerHTML = '';
+
+      types.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.type_id;
+        opt.textContent = `${t.type_name} (${formatPrice(t.daily_rate)}/day)`;
+        typeSelect.appendChild(opt);
+      });
+
+      // 2. Attach live preview triggers to inputs
+      const form = document.getElementById('addCarForm');
+      form.querySelectorAll('input, select, textarea').forEach(el => {
+        el.addEventListener('input', updateLivePreview);
+        el.addEventListener('change', updateLivePreview);
+      });
+
+      // 3. Form submission
+      form.addEventListener('submit', handleAddCarSubmit);
+
+      updateLivePreview();
+      renderRecentCarsTable();
+    }
+
+    function updateLivePreview() {
+      const model = document.getElementById('addModel').value || 'Vehicle Model';
+      const typeId = document.getElementById('addTypeId').value;
+      const reg = document.getElementById('addRegNo').value || 'REG-000';
+      const year = document.getElementById('addYear').value || '2024';
+      const status = document.getElementById('addStatus').value;
+      const hp = document.getElementById('addHorsepower').value || '350 HP';
+      const tag = document.getElementById('addTag').value || 'Luxury Fleet';
+      const img = document.getElementById('addImage').value || 'https://images.unsplash.com/photo-1594502184342-2e12f877aa73?auto=format&fit=crop&w=1200&q=80';
+      const desc = document.getElementById('addDescription').value || 'Vehicle description...';
+
+      const types = window.db.getCarTypes();
+      const typeObj = types.find(t => t.type_id == typeId) || { type_name: 'Luxury', daily_rate: 150 };
+
+      document.getElementById('prevModel').textContent = model;
+      document.getElementById('prevReg').textContent = reg;
+      document.getElementById('prevYear').textContent = `Year ${year}`;
+      document.getElementById('prevHP').textContent = hp;
+      document.getElementById('prevTag').textContent = tag;
+      document.getElementById('prevImg').src = img;
+      document.getElementById('prevDesc').textContent = desc;
+      document.getElementById('prevType').textContent = typeObj.type_name;
+      document.getElementById('prevPrice').innerHTML = `${formatPrice(typeObj.daily_rate)}<span class="text-xs font-normal text-gray-400">/day</span>`;
+
+      const prevStatus = document.getElementById('prevStatus');
+      if (status === 'Available') {
+        prevStatus.className = 'px-3 py-1 rounded-full text-[10px] font-bold badge-available backdrop-blur-md';
+        prevStatus.textContent = 'Available';
+      } else {
+        prevStatus.className = 'px-3 py-1 rounded-full text-[10px] font-bold badge-maintenance backdrop-blur-md';
+        prevStatus.textContent = 'Maintenance';
+      }
+    }
+
+    function handleAddCarSubmit(e) {
+      e.preventDefault();
+
+      const carData = {
+        model: document.getElementById('addModel').value,
+        type_id: document.getElementById('addTypeId').value,
+        reg_no: document.getElementById('addRegNo').value,
+        year: document.getElementById('addYear').value,
+        status: document.getElementById('addStatus').value,
+        seats: document.getElementById('addSeats').value,
+        mileage: document.getElementById('addMileage').value,
+        transmission: document.getElementById('addTransmission').value,
+        fuel: document.getElementById('addFuel').value,
+        horsepower: document.getElementById('addHorsepower').value,
+        drive: '4WD / All-Wheel Drive',
+        tag: document.getElementById('addTag').value,
+        image: document.getElementById('addImage').value,
+        description: document.getElementById('addDescription').value
+      };
+
+      try {
+        const newCar = window.db.addCar(carData);
+        alert(`Vehicle "${newCar.model}" successfully added to the database with Registration Plate "${newCar.reg_no}"!`);
+        renderRecentCarsTable();
+        // Generate new random reg number for preset
+        document.getElementById('addRegNo').value = 'ISB-LC-' + Math.floor(100 + Math.random() * 900);
+        updateLivePreview();
+      } catch (err) {
+        alert('Validation Error: ' + err.message);
+      }
+    }
+
+    function renderRecentCarsTable() {
+      const cars = window.db.getCars();
+      const types = window.db.getCarTypes();
+      const tbody = document.getElementById('recentCarsTableBody');
+      tbody.innerHTML = '';
+
+      cars.slice(0, 6).forEach(c => {
+        const type = types.find(t => t.type_id == c.type_id) || { type_name: 'Luxury', daily_rate: 150 };
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-white/5 transition-colors';
+        tr.innerHTML = `
+          <td class="py-3 font-semibold text-white flex items-center gap-2">
+            <img src="${c.image}" class="w-8 h-8 rounded-lg object-cover">
+            <span>${c.model}</span>
+          </td>
+          <td class="py-3 font-mono text-amber-300 font-bold">${c.reg_no}</td>
+          <td class="py-3 text-gray-300">${type.type_name}</td>
+          <td class="py-3">${c.seats} Seats</td>
+          <td class="py-3 font-bold text-amber-400">${formatPrice(type.daily_rate)}</td>
+          <td class="py-3">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${c.status === 'Available' ? 'badge-available' : c.status === 'Rented' ? 'badge-rented' : 'badge-maintenance'}">
+              ${c.status}
+            </span>
+          </td>
+          <td class="py-3 text-right">
+            <a href="car-details.html?id=${c.car_id}" class="text-xs text-amber-400 hover:underline">
+              View <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+  </script>
+</body>
+</html>

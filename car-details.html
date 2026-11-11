@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX DRIVE - Heavy & Luxury Car Rental | Page 2: Car Details</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Pro Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#090d16] text-gray-100 antialiased selection:bg-amber-500 selection:text-black">
+
+  <!-- Global Header Navigation -->
+  <header id="global-nav"></header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    
+    <!-- Breadcrumb & Top Bar -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-white/10 gap-4 mb-8">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs font-semibold text-amber-400 mb-1">
+          <a href="index.html" class="hover:underline flex items-center gap-1">
+            <i class="fa-solid fa-arrow-left"></i> Back to Fleet
+          </a>
+          <span>/</span>
+          <span class="text-gray-400">PAGE 2 OF 8: CAR DETAILS</span>
+        </div>
+        <h1 id="carTitle" class="font-heading text-3xl sm:text-4xl font-extrabold text-white">
+          Loading Vehicle Details...
+        </h1>
+      </div>
+
+      <!-- Quick Vehicle Switcher -->
+      <div class="flex items-center gap-3">
+        <label for="carPicker" class="text-xs text-gray-400 hidden md:block">Switch Vehicle:</label>
+        <select id="carPicker" class="bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+          <!-- Filled by JS -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Main Grid: Left Vehicle Showcase & Right Booking Estimator -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- LEFT COLUMN: Image Showcase, Specs, Features (8 Cols) -->
+      <div class="lg:col-span-8 space-y-8">
+        
+        <!-- Big Hero Image with Status Pill -->
+        <div class="relative rounded-3xl overflow-hidden glass-panel border border-white/10 group">
+          <img id="carMainImage" src="" alt="Car Image" class="w-full h-[400px] sm:h-[480px] object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-black/30"></div>
+          
+          <!-- Badges Floating -->
+          <div class="absolute top-6 left-6 flex flex-wrap gap-2">
+            <span id="carCategoryBadge" class="px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-black/80 backdrop-blur-md text-amber-400 border border-amber-500/30">
+              Heavy SUV
+            </span>
+            <span id="carTagBadge" class="px-3 py-1.5 rounded-full text-xs font-bold bg-white/10 backdrop-blur-md text-white border border-white/15">
+              Twin-Turbo
+            </span>
+          </div>
+
+          <div class="absolute top-6 right-6">
+            <span id="carStatusBadge" class="px-4 py-1.5 rounded-full text-xs font-bold badge-available backdrop-blur-md shadow-xl flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-check"></i> Available for Immediate Booking
+            </span>
+          </div>
+
+          <!-- Reg Plate Overlay -->
+          <div class="absolute bottom-6 left-6 px-4 py-2 rounded-xl bg-black/90 backdrop-blur-md border border-white/20 text-white font-mono text-sm shadow-xl flex items-center gap-2">
+            <i class="fa-solid fa-id-card text-amber-400"></i>
+            <span class="text-gray-400 text-xs">REG:</span>
+            <span id="carRegNo" class="font-bold tracking-wider text-amber-300">ISB-LC-300</span>
+          </div>
+        </div>
+
+        <!-- Vehicle Description & Narrative -->
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-4">
+          <h2 class="font-heading text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400"></i> Vehicle Profile & Highlights
+          </h2>
+          <p id="carDescription" class="text-sm text-gray-300 leading-relaxed">
+            Loading vehicle description...
+          </p>
+        </div>
+
+        <!-- Comprehensive Specifications Matrix -->
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
+          <h2 class="font-heading text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-amber-400"></i> Technical Specifications
+          </h2>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="specsMatrix">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <!-- Rental Perks & Safety Features -->
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
+          <h2 class="font-heading text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-award text-amber-400"></i> Guaranteed Fleet Inclusions
+          </h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div class="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/5">
+              <i class="fa-solid fa-shield-heart text-amber-400 text-lg mt-0.5"></i>
+              <div>
+                <strong class="text-white block text-sm">Comprehensive Insurance</strong>
+                <span class="text-gray-400">Third-party and vehicle body protection included with standard excess waiver.</span>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/5">
+              <i class="fa-solid fa-headset text-amber-400 text-lg mt-0.5"></i>
+              <div>
+                <strong class="text-white block text-sm">24/7 Roadside Assistance</strong>
+                <span class="text-gray-400">Immediate recovery, puncture service, and replacement vehicle standby.</span>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/5">
+              <i class="fa-solid fa-wand-magic-sparkles text-amber-400 text-lg mt-0.5"></i>
+              <div>
+                <strong class="text-white block text-sm">Deep Sanitization</strong>
+                <span class="text-gray-400">Hand-detailed, polished, and fully fueled before every single pickup.</span>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/5">
+              <i class="fa-solid fa-clock-rotate-left text-amber-400 text-lg mt-0.5"></i>
+              <div>
+                <strong class="text-white block text-sm">Flexible Cancellation</strong>
+                <span class="text-gray-400">Cancel or reschedule booking up to 24 hours prior with 100% refund.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: Sticky Real-Time Rate Calculator & Booking Action (4 Cols) -->
+      <div class="lg:col-span-4">
+        <div class="sticky top-28 glass-panel-gold p-6 sm:p-8 rounded-3xl space-y-6">
+          
+          <!-- Pricing Header -->
+          <div class="border-b border-amber-500/20 pb-5">
+            <span class="text-xs uppercase font-extrabold tracking-widest text-amber-400">Daily Rental Tariff</span>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span id="detailDailyPrice" class="font-heading text-4xl font-black text-white">$280</span>
+              <span class="text-sm text-gray-400">/ 24 hours</span>
+            </div>
+            <p class="text-[11px] text-gray-400 mt-1">
+              Calculated dynamically: <code class="text-amber-300">Amount = days &times; daily_rate</code>
+            </p>
+          </div>
+
+          <!-- Interactive Calculator -->
+          <div class="space-y-4">
+            <div class="text-xs font-bold text-white uppercase tracking-wider">Estimate Rental Cost</div>
+            
+            <div>
+              <label class="block text-xs text-gray-300 mb-1">Pickup Date</label>
+              <input type="date" id="calcStartDate" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+            </div>
+
+            <div>
+              <label class="block text-xs text-gray-300 mb-1">Drop-off Date</label>
+              <input type="date" id="calcEndDate" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
+            </div>
+
+            <!-- Overlap Warning -->
+            <div id="calcOverlapNotice" class="hidden p-3 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs">
+              <i class="fa-solid fa-triangle-exclamation mr-1"></i>
+              <span id="calcOverlapText">Conflict detected!</span>
+            </div>
+
+            <!-- Price Breakdown Summary -->
+            <div class="bg-black/40 rounded-2xl p-4 border border-white/5 space-y-2 text-xs">
+              <div class="flex justify-between text-gray-300">
+                <span>Rental Duration:</span>
+                <span id="calcDaysCount" class="font-semibold text-white">3 Days</span>
+              </div>
+              <div class="flex justify-between text-gray-300">
+                <span>Base Rental:</span>
+                <span id="calcBaseAmount" class="font-semibold text-white">$840</span>
+              </div>
+              <div class="flex justify-between text-gray-300">
+                <span>Refundable Security Deposit:</span>
+                <span class="font-semibold text-emerald-400">Waived (VIP)</span>
+              </div>
+              <div class="pt-3 border-t border-white/10 flex justify-between items-baseline">
+                <span class="font-bold text-white text-sm">Estimated Total:</span>
+                <span id="calcTotalAmount" class="font-heading text-2xl font-black text-amber-400">$840</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="space-y-3 pt-2">
+            <button id="btnProceedToBook" onclick="proceedToBooking()" class="w-full btn-gold py-4 px-6 rounded-2xl font-extrabold text-sm flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25">
+              <i class="fa-solid fa-key"></i> Proceed to Booking Form
+            </button>
+            <a href="index.html" class="w-full btn-secondary py-3 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2">
+              <i class="fa-solid fa-magnifying-glass"></i> Explore Other Fleet Models
+            </a>
+          </div>
+
+          <!-- Security Stamp -->
+          <div class="text-[11px] text-gray-400 text-center flex items-center justify-center gap-2 pt-2 border-t border-white/5">
+            <i class="fa-solid fa-lock text-emerald-400"></i>
+            <span>Encrypted Booking &bull; No Overlap Double-Booking Guaranteed</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer id="global-footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    let activeCar = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHeader('details');
+      renderFooter();
+      loadCarDetails();
+    });
+
+    function loadCarDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let carId = urlParams.get('id');
+
+      const cars = window.db.getCars();
+      if (!carId || !cars.find(c => c.car_id == carId)) {
+        carId = cars[0].car_id; // Default to first car (e.g. Land Cruiser 300)
+      }
+
+      // Populate Switcher Dropdown
+      const picker = document.getElementById('carPicker');
+      picker.innerHTML = '';
+      cars.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.car_id;
+        opt.textContent = `${c.model} (${c.reg_no})`;
+        if (c.car_id == carId) opt.selected = true;
+        picker.appendChild(opt);
+      });
+
+      picker.addEventListener('change', (e) => {
+        window.location.href = `car-details.html?id=${e.target.value}`;
+      });
+
+      activeCar = window.db.getCarById(carId);
+      renderCarData(activeCar);
+      initCalculator(activeCar);
+    }
+
+    function renderCarData(car) {
+      const types = window.db.getCarTypes();
+      const type = types.find(t => t.type_id == car.type_id) || { type_name: 'Luxury', daily_rate: 150 };
+
+      document.getElementById('carTitle').textContent = car.model;
+      document.getElementById('carMainImage').src = car.image;
+      document.getElementById('carMainImage').alt = car.model;
+      document.getElementById('carCategoryBadge').textContent = type.type_name;
+      document.getElementById('carTagBadge').textContent = car.tag || 'Executive Choice';
+      document.getElementById('carRegNo').textContent = car.reg_no;
+      document.getElementById('carDescription').textContent = car.description;
+      document.getElementById('detailDailyPrice').textContent = formatPrice(type.daily_rate);
+
+      // Status Badge
+      const statusBadge = document.getElementById('carStatusBadge');
+      if (car.status === 'Available') {
+        statusBadge.className = 'px-4 py-1.5 rounded-full text-xs font-bold badge-available backdrop-blur-md shadow-xl flex items-center gap-1.5';
+        statusBadge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Available for Immediate Booking';
+      } else if (car.status === 'Rented') {
+        statusBadge.className = 'px-4 py-1.5 rounded-full text-xs font-bold badge-rented backdrop-blur-md shadow-xl flex items-center gap-1.5';
+        statusBadge.innerHTML = '<i class="fa-solid fa-clock"></i> Currently on Active Rental';
+      } else {
+        statusBadge.className = 'px-4 py-1.5 rounded-full text-xs font-bold badge-maintenance backdrop-blur-md shadow-xl flex items-center gap-1.5';
+        statusBadge.innerHTML = '<i class="fa-solid fa-wrench"></i> Currently Under Workshop Maintenance';
+        document.getElementById('btnProceedToBook').disabled = true;
+        document.getElementById('btnProceedToBook').className = 'w-full opacity-50 cursor-not-allowed bg-rose-500/20 text-rose-300 border border-rose-500/30 py-4 px-6 rounded-2xl font-bold text-sm flex items-center justify-center gap-2';
+        document.getElementById('btnProceedToBook').innerHTML = '<i class="fa-solid fa-ban"></i> Booking Locked (In Maintenance)';
+      }
+
+      // Specs Matrix
+      const specs = [
+        { label: 'Registration Plate', val: car.reg_no, icon: 'fa-id-card' },
+        { label: 'Model Year', val: car.year, icon: 'fa-calendar' },
+        { label: 'Horsepower', val: car.horsepower || '350 HP', icon: 'fa-gauge-high' },
+        { label: 'Drivetrain', val: car.drive || 'AWD / 4WD', icon: 'fa-truck-monster' },
+        { label: 'Passenger Seats', val: `${car.seats} Passengers`, icon: 'fa-users' },
+        { label: 'Transmission', val: car.transmission || 'Automatic', icon: 'fa-gears' },
+        { label: 'Fuel System', val: car.fuel || 'Petrol V6', icon: 'fa-gas-pump' },
+        { label: 'Odometer Mileage', val: `${(car.mileage || 10000).toLocaleString()} KM`, icon: 'fa-road' }
+      ];
+
+      const specsContainer = document.getElementById('specsMatrix');
+      specsContainer.innerHTML = '';
+      specs.forEach(s => {
+        const item = document.createElement('div');
+        item.className = 'bg-white/5 border border-white/5 rounded-2xl p-4 text-center';
+        item.innerHTML = `
+          <i class="fa-solid ${s.icon} text-amber-400 text-lg mb-2"></i>
+          <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">${s.label}</div>
+          <div class="text-sm font-bold text-white mt-0.5 truncate">${s.val}</div>
+        `;
+        specsContainer.appendChild(item);
+      });
+    }
+
+    function initCalculator(car) {
+      const types = window.db.getCarTypes();
+      const type = types.find(t => t.type_id == car.type_id) || { daily_rate: 150 };
+
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const endDefault = new Date(tomorrow);
+      endDefault.setDate(endDefault.getDate() + 3);
+
+      const toISO = d => d.toISOString().split('T')[0];
+      const startIn = document.getElementById('calcStartDate');
+      const endIn = document.getElementById('calcEndDate');
+
+      startIn.min = toISO(today);
+      startIn.value = toISO(tomorrow);
+      endIn.min = toISO(tomorrow);
+      endIn.value = toISO(endDefault);
+
+      function updateCalc() {
+        const s = new Date(startIn.value);
+        const e = new Date(endIn.value);
+
+        if (e < s) {
+          endIn.value = startIn.value;
+        }
+
+        const diffTime = Math.abs(new Date(endIn.value) - new Date(startIn.value));
+        const days = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1);
+        const total = days * type.daily_rate;
+
+        document.getElementById('calcDaysCount').textContent = `${days} Days`;
+        document.getElementById('calcBaseAmount').textContent = formatPrice(total);
+        document.getElementById('calcTotalAmount').textContent = formatPrice(total);
+
+        // Overlap Check Alert
+        const conflict = window.db.checkOverlap(car.car_id, startIn.value, endIn.value);
+        const notice = document.getElementById('calcOverlapNotice');
+        const proceedBtn = document.getElementById('btnProceedToBook');
+
+        if (conflict) {
+          notice.classList.remove('hidden');
+          document.getElementById('calcOverlapText').textContent = `Car is booked from ${conflict.start_date} to ${conflict.end_date}. Choose other dates.`;
+          proceedBtn.disabled = true;
+          proceedBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        } else if (car.status !== 'Maintenance') {
+          notice.classList.add('hidden');
+          proceedBtn.disabled = false;
+          proceedBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+      }
+
+      startIn.addEventListener('change', updateCalc);
+      endIn.addEventListener('change', updateCalc);
+      updateCalc();
+    }
+
+    function proceedToBooking() {
+      if (!activeCar) return;
+      const start = document.getElementById('calcStartDate').value;
+      const end = document.getElementById('calcEndDate').value;
+      window.location.href = `booking.html?car_id=${activeCar.car_id}&start=${start}&end=${end}`;
+    }
+  </script>
+</body>
+</html>

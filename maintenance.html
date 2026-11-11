@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX DRIVE - Heavy & Luxury Car Rental | Page 7: Maintenance Status</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Pro Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#090d16] text-gray-100 antialiased selection:bg-amber-500 selection:text-black">
+
+  <!-- Global Header Navigation -->
+  <header id="global-nav"></header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    
+    <!-- Page Header -->
+    <div class="mb-8 pb-6 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs font-semibold text-rose-400 mb-1">
+          <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+          PAGE 7 OF 8: WORKSHOP LOGS & MAINTENANCE STATUS
+        </div>
+        <h1 class="font-heading text-3xl sm:text-4xl font-extrabold text-white">
+          Fleet Health & Maintenance Hub
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-400 mt-1">
+          Monitor vehicle servicing, workshop inspections, and enforce Project 7 Business Rule: <strong class="text-rose-300">"Cars in Maintenance cannot be booked"</strong>.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="openSendToWorkshopModal()" class="bg-rose-500 text-white hover:bg-rose-600 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-rose-500/20 transition-all">
+          <i class="fa-solid fa-wrench"></i> Send Vehicle to Workshop
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI Metric Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <!-- Card 1 -->
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs text-gray-400 font-semibold uppercase">Vehicles In Workshop</span>
+          <i class="fa-solid fa-wrench text-rose-400"></i>
+        </div>
+        <div class="font-heading text-3xl font-black text-rose-400" id="kpiUnderMaintenance">1</div>
+        <div class="text-[11px] text-gray-400 mt-1">Locked from booking system</div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs text-gray-400 font-semibold uppercase">Active Fleet Ready</span>
+          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        </div>
+        <div class="font-heading text-3xl font-black text-emerald-400" id="kpiFleetReady">10</div>
+        <div class="text-[11px] text-gray-400 mt-1">Available for instant rental</div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs text-gray-400 font-semibold uppercase">Currently Rented</span>
+          <i class="fa-solid fa-car-side text-amber-400"></i>
+        </div>
+        <div class="font-heading text-3xl font-black text-amber-400" id="kpiRented">1</div>
+        <div class="text-[11px] text-gray-400 mt-1">Out on active contracts</div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs text-gray-400 font-semibold uppercase">Fleet Health Score</span>
+          <i class="fa-solid fa-heart-pulse text-cyan-400"></i>
+        </div>
+        <div class="font-heading text-3xl font-black text-white" id="kpiHealthScore">92%</div>
+        <div class="text-[11px] text-cyan-300 mt-1">Inspection certified</div>
+      </div>
+    </div>
+
+    <!-- Business Rule Highlight Alert -->
+    <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/25 mb-8 flex items-center justify-between text-xs gap-4">
+      <div class="flex items-center gap-3 text-amber-300">
+        <i class="fa-solid fa-shield-halved text-xl"></i>
+        <div>
+          <strong class="font-bold block text-white">Project 7 Business Rule Active:</strong>
+          Any car with <code class="text-amber-300">status = 'Maintenance'</code> is automatically disabled in search results, locked in the booking form, and prevented from being rented.
+        </div>
+      </div>
+      <a href="index.html" class="btn-secondary px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap hover:border-amber-400">
+        Verify on Page 1 &rarr;
+      </a>
+    </div>
+
+    <!-- Comprehensive Fleet Maintenance Table -->
+    <div class="glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+        <div>
+          <h2 class="font-heading text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-clipboard-list text-rose-400"></i> Complete Fleet Maintenance & Operational State
+          </h2>
+          <p class="text-xs text-gray-400 mt-0.5">Toggle vehicle status between 'Maintenance' and 'Available' with instant persistence.</p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex items-center gap-2">
+          <select id="filterMaintenanceStatus" onchange="loadMaintenanceTable()" class="bg-black/60 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+            <option value="all">All Vehicles (All Statuses)</option>
+            <option value="Maintenance">Only Under Maintenance</option>
+            <option value="Available">Only Available</option>
+            <option value="Rented">Only Rented</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left">
+          <thead>
+            <tr class="border-b border-white/10 text-gray-400 uppercase text-[10px]">
+              <th class="py-3">Vehicle Details</th>
+              <th class="py-3">Plate / Reg No</th>
+              <th class="py-3">Type</th>
+              <th class="py-3">Mileage</th>
+              <th class="py-3">Current Status</th>
+              <th class="py-3">Service Assessment</th>
+              <th class="py-3 text-right">Operational Toggle</th>
+            </tr>
+          </thead>
+          <tbody id="maintenanceTableBody" class="divide-y divide-white/5 text-gray-300">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Active Workshop Job Cards -->
+    <div class="mt-12 space-y-6">
+      <h3 class="font-heading text-xl font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Active Service Job Orders
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="jobCardsContainer">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Send to Workshop Modal -->
+  <div id="workshopModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="glass-panel bg-[#0d1424] max-w-lg w-full rounded-3xl p-6 sm:p-8 border border-white/15 shadow-2xl space-y-5">
+      
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div class="flex items-center gap-2 text-white font-heading font-bold text-lg">
+          <i class="fa-solid fa-wrench text-rose-400"></i> Send Vehicle to Maintenance
+        </div>
+        <button onclick="closeSendToWorkshopModal()" class="text-gray-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="scheduleServiceForm" class="space-y-4">
+        <div>
+          <label class="block text-xs text-gray-300 uppercase tracking-wider mb-1 font-semibold">Select Vehicle</label>
+          <select id="modalCarSelect" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2.5 text-xs text-white" required>
+            <!-- Filled by JS -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs text-gray-300 uppercase tracking-wider mb-1 font-semibold">Service Description / Reason</label>
+          <select id="modalServiceReason" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2.5 text-xs text-white">
+            <option value="Periodic 10,000 KM Engine & Filter Inspection">Periodic 10,000 KM Engine & Filter Inspection</option>
+            <option value="Brembo Brake Pads Replacement & Fluid Flush">Brembo Brake Pads Replacement & Fluid Flush</option>
+            <option value="Multi-Terrain Suspension & Differential Tuning">Multi-Terrain Suspension & Differential Tuning</option>
+            <option value="Twin-Turbo Intercooler Diagnostics & Sensors">Twin-Turbo Intercooler Diagnostics & Sensors</option>
+            <option value="Ceramic Coating & Luxury Leather Detailing">Ceramic Coating & Luxury Leather Detailing</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs text-gray-300 uppercase tracking-wider mb-1 font-semibold">Expected Return Date</label>
+            <input type="date" id="modalReturnDate" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white" required>
+          </div>
+
+          <div>
+            <label class="block text-xs text-gray-300 uppercase tracking-wider mb-1 font-semibold">Estimated Cost ($)</label>
+            <input type="number" id="modalEstimatedCost" value="350" min="0" class="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white font-mono">
+          </div>
+        </div>
+
+        <div class="pt-3">
+          <button type="submit" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-rose-500/20">
+            <i class="fa-solid fa-lock"></i> Put into Maintenance & Lock from Bookings
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Global Footer -->
+  <footer id="global-footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHeader('maintenance');
+      renderFooter();
+      loadMaintenanceTable();
+      initWorkshopModal();
+    });
+
+    function loadMaintenanceTable() {
+      const cars = window.db.getCars();
+      const types = window.db.getCarTypes();
+      const filter = document.getElementById('filterMaintenanceStatus').value;
+
+      // Update KPI Cards
+      const underMaint = cars.filter(c => c.status === 'Maintenance').length;
+      const available = cars.filter(c => c.status === 'Available').length;
+      const rented = cars.filter(c => c.status === 'Rented').length;
+
+      document.getElementById('kpiUnderMaintenance').textContent = underMaint;
+      document.getElementById('kpiFleetReady').textContent = available;
+      document.getElementById('kpiRented').textContent = rented;
+
+      const healthScore = Math.round((available / Math.max(1, cars.length)) * 100);
+      document.getElementById('kpiHealthScore').textContent = `${healthScore}%`;
+
+      // Filter
+      let displayedCars = cars;
+      if (filter !== 'all') {
+        displayedCars = cars.filter(c => c.status === filter);
+      }
+
+      const tbody = document.getElementById('maintenanceTableBody');
+      tbody.innerHTML = '';
+
+      displayedCars.forEach(car => {
+        const type = types.find(t => t.type_id == car.type_id) || { type_name: 'Luxury' };
+        const isMaintenance = car.status === 'Maintenance';
+        const isRented = car.status === 'Rented';
+
+        let badgeClass = 'badge-available';
+        if (isMaintenance) badgeClass = 'badge-maintenance';
+        else if (isRented) badgeClass = 'badge-rented';
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-white/5 transition-colors';
+        tr.innerHTML = `
+          <td class="py-3 flex items-center gap-3">
+            <img src="${car.image}" class="w-10 h-10 rounded-xl object-cover border border-white/10">
+            <div>
+              <div class="font-bold text-white">${car.model}</div>
+              <div class="text-[10px] text-gray-400">Year ${car.year} &bull; ${car.horsepower || 'V6'}</div>
+            </div>
+          </td>
+          <td class="py-3 font-mono text-amber-300 font-bold">${car.reg_no}</td>
+          <td class="py-3 text-gray-300">${type.type_name}</td>
+          <td class="py-3 font-mono text-gray-300">${(car.mileage || 10000).toLocaleString()} KM</td>
+          <td class="py-3">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${badgeClass}">
+              ${car.status}
+            </span>
+          </td>
+          <td class="py-3 text-xs text-gray-400">
+            ${isMaintenance ? '<span class="text-rose-400 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Under Active Workshop Service</span>' : isRented ? '<span class="text-amber-400 font-semibold"><i class="fa-solid fa-key mr-1"></i> Rented & Driving on Road</span>' : '<span class="text-emerald-400"><i class="fa-solid fa-check mr-1"></i> Passed Safety Inspection</span>'}
+          </td>
+          <td class="py-3 text-right">
+            ${isMaintenance ? `
+              <button onclick="toggleCarMaintenance(${car.car_id}, 'Available')" class="bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black border border-emerald-500/40 px-3 py-1.5 rounded-xl text-xs font-bold transition-all inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-check"></i> Release to Available
+              </button>
+            ` : isRented ? `
+              <span class="text-[11px] text-gray-500 italic">Cannot toggle while rented</span>
+            ` : `
+              <button onclick="toggleCarMaintenance(${car.car_id}, 'Maintenance')" class="bg-rose-500/10 text-rose-300 hover:bg-rose-500 hover:text-white border border-rose-500/30 px-3 py-1.5 rounded-xl text-xs font-bold transition-all inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-wrench"></i> Send to Maintenance
+              </button>
+            `}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      renderActiveJobCards(cars.filter(c => c.status === 'Maintenance'));
+    }
+
+    function toggleCarMaintenance(carId, targetStatus) {
+      try {
+        window.db.setCarStatus(carId, targetStatus);
+        loadMaintenanceTable();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function renderActiveJobCards(maintCars) {
+      const container = document.getElementById('jobCardsContainer');
+      container.innerHTML = '';
+
+      if (maintCars.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-8 glass-panel rounded-2xl text-xs text-gray-400">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-lg mb-2 block"></i>
+            All fleet vehicles are operational. No vehicles currently in workshop.
+          </div>
+        `;
+        return;
+      }
+
+      maintCars.forEach(car => {
+        const card = document.createElement('div');
+        card.className = 'glass-panel p-5 rounded-2xl border-rose-500/30 space-y-4';
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span> Workshop Work Order
+            </span>
+            <span class="font-mono text-xs text-gray-400">${car.reg_no}</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <img src="${car.image}" class="w-14 h-14 object-cover rounded-xl border border-white/10">
+            <div>
+              <h4 class="font-bold text-white text-sm">${car.model}</h4>
+              <div class="text-[11px] text-gray-400 font-mono">${(car.mileage || 15000).toLocaleString()} KM</div>
+            </div>
+          </div>
+
+          <div class="bg-black/40 p-3 rounded-xl border border-white/5 text-xs text-gray-300 space-y-1">
+            <div class="text-gray-400">Scheduled Work:</div>
+            <div class="font-semibold text-rose-200">Suspension calibration & brake pads overhaul</div>
+          </div>
+
+          <button onclick="toggleCarMaintenance(${car.car_id}, 'Available')" class="w-full btn-gold py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-check"></i> Complete Service & Release Car
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function initWorkshopModal() {
+      const cars = window.db.getCars().filter(c => c.status !== 'Maintenance');
+      const select = document.getElementById('modalCarSelect');
+      select.innerHTML = '';
+
+      cars.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.car_id;
+        opt.textContent = `${c.model} (${c.reg_no}) - ${c.status}`;
+        if (c.status === 'Rented') opt.disabled = true;
+        select.appendChild(opt);
+      });
+
+      const today = new Date();
+      today.setDate(today.getDate() + 3);
+      document.getElementById('modalReturnDate').value = today.toISOString().split('T')[0];
+
+      document.getElementById('scheduleServiceForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const carId = document.getElementById('modalCarSelect').value;
+        if (!carId) return;
+
+        window.db.setCarStatus(carId, 'Maintenance');
+        closeSendToWorkshopModal();
+        loadMaintenanceTable();
+        alert('Vehicle successfully scheduled for workshop service and locked from booking system.');
+      });
+    }
+
+    function openSendToWorkshopModal() {
+      initWorkshopModal();
+      document.getElementById('workshopModal').classList.remove('hidden');
+    }
+
+    function closeSendToWorkshopModal() {
+      document.getElementById('workshopModal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

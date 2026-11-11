@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX DRIVE - Heavy & Luxury Car Rental | Page 5: Staff Pickup & Return</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Pro Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#090d16] text-gray-100 antialiased selection:bg-amber-500 selection:text-black">
+
+  <!-- Global Header Navigation -->
+  <header id="global-nav"></header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    
+    <!-- Page Header & Staff Badge -->
+    <div class="mb-8 pb-6 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 mb-1">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          PAGE 5 OF 8: STAFF OPERATIONS - PICKUP & RETURN CONSOLE
+        </div>
+        <h1 class="font-heading text-3xl sm:text-4xl font-extrabold text-white">
+          Vehicle Dispatch & Return Hub
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-400 mt-1">
+          Staff console to record vehicle key handover, odometer mileage readings, fuel inspections, and return billing settlement.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-2">
+          <i class="fa-solid fa-user-shield"></i> Authorized Fleet Staff
+        </span>
+      </div>
+    </div>
+
+    <!-- Mode Selector Tabs: Pickup vs Return -->
+    <div class="flex justify-center mb-8">
+      <div class="inline-flex p-1.5 bg-black/60 rounded-2xl border border-white/10 max-w-md w-full">
+        <button id="tabPickupBtn" onclick="switchMode('pickup')" class="flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-key"></i> 1. Vehicle Pickup Handover
+        </button>
+        <button id="tabReturnBtn" onclick="switchMode('return')" class="flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-400 hover:text-white flex items-center justify-center gap-2">
+          <i class="fa-solid fa-arrow-right-arrow-left"></i> 2. Vehicle Return & Billing
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- PANEL 1: RECORD PICKUP SCREEN -->
+    <!-- ============================================== -->
+    <section id="panelPickup" class="space-y-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left: Form -->
+        <div class="lg:col-span-8 glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <h2 class="font-heading text-xl font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-id-card-clip text-amber-400"></i> Dispatch Vehicle to Customer
+            </h2>
+            <span class="text-xs text-gray-400">Step: Customer Departure</span>
+          </div>
+
+          <form id="pickupForm" class="space-y-5">
+            <!-- Select Confirmed Booking -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Select Confirmed Reservation
+              </label>
+              <select id="pickupBookingSelect" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-400" required>
+                <!-- Populated by JS -->
+              </select>
+            </div>
+
+            <!-- Pre-Handover Inspection Details -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                  Starting Odometer Reading (KM) <span class="text-rose-400">*</span>
+                </label>
+                <input type="number" id="pickupMileageInput" placeholder="e.g. 12500" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-400 font-mono" required>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                  Fuel Level at Dispatch
+                </label>
+                <select id="pickupFuelLevel" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-400">
+                  <option value="100">Full Tank (100%) - Standard</option>
+                  <option value="75">3/4 Tank (75%)</option>
+                  <option value="50">Half Tank (50%)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Mandatory Verification Checklist -->
+            <div class="bg-white/5 p-4 rounded-2xl border border-white/5 space-y-2.5">
+              <div class="text-xs font-bold uppercase tracking-wider text-amber-400">Staff Inspection Checklist</div>
+              
+              <label class="flex items-center gap-3 text-xs text-gray-300 cursor-pointer">
+                <input type="checkbox" required class="w-4 h-4 accent-amber-500 rounded">
+                <span>Original Driving License & CNIC physically inspected and verified.</span>
+              </label>
+
+              <label class="flex items-center gap-3 text-xs text-gray-300 cursor-pointer">
+                <input type="checkbox" required class="w-4 h-4 accent-amber-500 rounded">
+                <span>Exterior paint, rims, and interior verified clean without unrecorded damages.</span>
+              </label>
+
+              <label class="flex items-center gap-3 text-xs text-gray-300 cursor-pointer">
+                <input type="checkbox" required class="w-4 h-4 accent-amber-500 rounded">
+                <span>Vehicle registration certificate & spare tire tools present in trunk.</span>
+              </label>
+            </div>
+
+            <!-- Submit Pickup Action -->
+            <button type="submit" id="btnConfirmPickup" class="w-full btn-gold py-4 px-6 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-amber-500/20">
+              <i class="fa-solid fa-key"></i> Confirm Vehicle Handover (Set to Rented)
+            </button>
+          </form>
+        </div>
+
+        <!-- Right: Real-time Selected Reservation Card -->
+        <div class="lg:col-span-4">
+          <div class="glass-panel-gold p-6 rounded-3xl space-y-5">
+            <h3 class="font-heading font-bold text-white text-base border-b border-amber-500/20 pb-3 flex items-center justify-between">
+              <span>Reservation Brief</span>
+              <span class="text-xs font-mono text-amber-400" id="briefBookingId">#1001</span>
+            </h3>
+
+            <div class="space-y-3 text-xs">
+              <div class="flex items-center gap-3 bg-black/40 p-3 rounded-2xl border border-white/10">
+                <img id="briefCarImg" src="" alt="Car" class="w-16 h-14 object-cover rounded-xl">
+                <div class="truncate">
+                  <div class="font-bold text-white truncate" id="briefCarModel">Toyota Land Cruiser</div>
+                  <div class="text-[11px] font-mono text-amber-300" id="briefCarReg">ISB-LC-300</div>
+                </div>
+              </div>
+
+              <div class="space-y-1.5 pt-2">
+                <div class="flex justify-between text-gray-400"><span>Customer:</span> <span class="text-white font-bold" id="briefCustomerName">Ali Raza</span></div>
+                <div class="flex justify-between text-gray-400"><span>CNIC:</span> <span class="text-white font-mono" id="briefCustomerCnic">35202-9876543-3</span></div>
+                <div class="flex justify-between text-gray-400"><span>Phone:</span> <span class="text-white font-mono" id="briefCustomerPhone">+92 321 8884321</span></div>
+                <div class="flex justify-between text-gray-400"><span>Dates:</span> <span class="text-white" id="briefDates">2026-11-05 to 2026-11-10</span></div>
+                <div class="flex justify-between text-gray-400 border-t border-white/10 pt-2"><span>Total Bill:</span> <span class="text-amber-400 font-bold" id="briefAmount">$1,400</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- PANEL 2: RECORD RETURN SCREEN -->
+    <!-- ============================================== -->
+    <section id="panelReturn" class="space-y-8 hidden">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left: Form -->
+        <div class="lg:col-span-8 glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <h2 class="font-heading text-xl font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-arrow-right-arrow-left text-cyan-400"></i> Record Return & Final Settlement
+            </h2>
+            <span class="text-xs text-gray-400">Step: Customer Return</span>
+          </div>
+
+          <form id="returnForm" class="space-y-5">
+            <!-- Select Active Rented Booking -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                Select Active Rented Vehicle
+              </label>
+              <select id="returnBookingSelect" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400" required>
+                <!-- Populated by JS -->
+              </select>
+            </div>
+
+            <!-- Mileage Input & Driven KM Calculation -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                  Return Odometer Reading (KM) <span class="text-rose-400">*</span>
+                </label>
+                <input type="number" id="returnMileageInput" placeholder="e.g. 13200" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 font-mono" required>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                  Distance Driven During Rental
+                </label>
+                <div class="bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-cyan-300 font-bold" id="returnDrivenKmDisplay">
+                  0 KM Driven
+                </div>
+              </div>
+            </div>
+
+            <!-- Overdue days / Extra charges if any -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                  Late Return / Extra Days Penalty ($)
+                </label>
+                <input type="number" id="returnLateFee" value="0" min="0" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400 font-mono">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                  Payment Method for Final Balance
+                </label>
+                <select id="returnPaymentMethod" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-400">
+                  <option value="Cash">Cash Collected on Counter</option>
+                  <option value="Card">Credit / Debit Card Terminal</option>
+                  <option value="Online">Online Bank Transfer</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Submit Return Action -->
+            <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black py-4 px-6 rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-cyan-500/20 hover:from-cyan-400 hover:to-blue-500 transition-all">
+              <i class="fa-solid fa-flag-checkered"></i> Complete Return & Settle Final Bill (Free Car)
+            </button>
+          </form>
+        </div>
+
+        <!-- Right: Final Settlement Calculation -->
+        <div class="lg:col-span-4">
+          <div class="glass-panel p-6 rounded-3xl space-y-5 border-cyan-500/30">
+            <h3 class="font-heading font-bold text-white text-base border-b border-white/10 pb-3 flex items-center justify-between">
+              <span>Return Billing Summary</span>
+              <span class="text-xs font-mono text-cyan-400" id="returnBriefBookingId">#1001</span>
+            </h3>
+
+            <div class="space-y-3 text-xs">
+              <div class="flex items-center gap-3 bg-black/40 p-3 rounded-2xl border border-white/10">
+                <img id="returnBriefCarImg" src="" alt="Car" class="w-16 h-14 object-cover rounded-xl">
+                <div class="truncate">
+                  <div class="font-bold text-white truncate" id="returnBriefCarModel">Range Rover Autobiography</div>
+                  <div class="text-[11px] font-mono text-cyan-300" id="returnBriefCarReg">KHI-RR-777</div>
+                </div>
+              </div>
+
+              <div class="space-y-2 pt-2">
+                <div class="flex justify-between text-gray-400"><span>Pickup Odometer:</span> <span class="text-white font-mono" id="returnBriefPickupKm">18,000 KM</span></div>
+                <div class="flex justify-between text-gray-400"><span>Base Booking Fee:</span> <span class="text-white font-bold" id="returnBriefBaseAmount">$1,400</span></div>
+                <div class="flex justify-between text-gray-400"><span>Extra Adjustments:</span> <span class="text-amber-400 font-mono" id="returnBriefAdjustments">$0</span></div>
+                <div class="flex justify-between text-gray-400 border-t border-white/10 pt-3 items-baseline">
+                  <span class="font-bold text-white">Final Settle Amount:</span> 
+                  <span class="text-2xl font-black text-cyan-400 font-heading" id="returnBriefFinalAmount">$1,400</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer id="global-footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    let currentMode = 'pickup';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHeader('pickup-return');
+      renderFooter();
+      loadPickupOptions();
+      loadReturnOptions();
+
+      // Form Listeners
+      document.getElementById('pickupForm').addEventListener('submit', handlePickupSubmit);
+      document.getElementById('returnForm').addEventListener('submit', handleReturnSubmit);
+    });
+
+    function switchMode(mode) {
+      currentMode = mode;
+      const tabPickup = document.getElementById('tabPickupBtn');
+      const tabReturn = document.getElementById('tabReturnBtn');
+      const panelPickup = document.getElementById('panelPickup');
+      const panelReturn = document.getElementById('panelReturn');
+
+      if (mode === 'pickup') {
+        tabPickup.className = 'flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2';
+        tabReturn.className = 'flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-400 hover:text-white flex items-center justify-center gap-2';
+        panelPickup.classList.remove('hidden');
+        panelReturn.classList.add('hidden');
+        loadPickupOptions();
+      } else {
+        tabReturn.className = 'flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all bg-gradient-to-r from-cyan-500 to-blue-600 text-black shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2';
+        tabPickup.className = 'flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-400 hover:text-white flex items-center justify-center gap-2';
+        panelReturn.classList.remove('hidden');
+        panelPickup.classList.add('hidden');
+        loadReturnOptions();
+      }
+    }
+
+    // --- PICKUP LOGIC ---
+    function loadPickupOptions() {
+      const bookings = window.db.getBookings().filter(b => b.status === 'Confirmed');
+      const cars = window.db.getCars();
+      const customers = window.db.getCustomers();
+      const select = document.getElementById('pickupBookingSelect');
+      select.innerHTML = '';
+
+      if (bookings.length === 0) {
+        select.innerHTML = '<option value="">No upcoming confirmed bookings pending pickup</option>';
+        document.getElementById('btnConfirmPickup').disabled = true;
+        document.getElementById('btnConfirmPickup').classList.add('opacity-50', 'cursor-not-allowed');
+        return;
+      }
+
+      document.getElementById('btnConfirmPickup').disabled = false;
+      document.getElementById('btnConfirmPickup').classList.remove('opacity-50', 'cursor-not-allowed');
+
+      bookings.forEach(b => {
+        const car = cars.find(c => c.car_id == b.car_id);
+        const cust = customers.find(c => c.customer_id == b.customer_id);
+        const opt = document.createElement('option');
+        opt.value = b.booking_id;
+        opt.textContent = `Booking #${b.booking_id} - ${car ? car.model : 'Vehicle'} (${cust ? cust.name : 'Customer'})`;
+        select.appendChild(opt);
+      });
+
+      select.addEventListener('change', updatePickupBrief);
+      updatePickupBrief();
+    }
+
+    function updatePickupBrief() {
+      const bId = document.getElementById('pickupBookingSelect').value;
+      if (!bId) return;
+
+      const booking = window.db.getBookings().find(b => b.booking_id == bId);
+      if (!booking) return;
+
+      const car = window.db.getCarById(booking.car_id);
+      const cust = window.db.getCustomers().find(c => c.customer_id == booking.customer_id);
+
+      document.getElementById('briefBookingId').textContent = `#${booking.booking_id}`;
+      document.getElementById('briefCarImg').src = car ? car.image : '';
+      document.getElementById('briefCarModel').textContent = car ? car.model : '';
+      document.getElementById('briefCarReg').textContent = car ? car.reg_no : '';
+      document.getElementById('briefCustomerName').textContent = cust ? cust.name : '';
+      document.getElementById('briefCustomerCnic').textContent = cust ? cust.cnic : '';
+      document.getElementById('briefCustomerPhone').textContent = cust ? cust.phone : '';
+      document.getElementById('briefDates').textContent = `${booking.start_date} to ${booking.end_date}`;
+      document.getElementById('briefAmount').textContent = formatPrice(booking.total_amount);
+
+      // Pre-fill starting mileage from car's current mileage
+      if (car) {
+        document.getElementById('pickupMileageInput').value = car.mileage || 10000;
+      }
+    }
+
+    function handlePickupSubmit(e) {
+      e.preventDefault();
+      const bId = document.getElementById('pickupBookingSelect').value;
+      const mileage = document.getElementById('pickupMileageInput').value;
+
+      if (!bId || !mileage) {
+        alert('Please select a booking and enter the pickup mileage.');
+        return;
+      }
+
+      try {
+        window.db.processPickup(bId, mileage);
+        alert(`Vehicle successfully dispatched! Booking #${bId} is now ACTIVE and vehicle status set to RENTED.`);
+        loadPickupOptions();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    // --- RETURN LOGIC ---
+    function loadReturnOptions() {
+      const bookings = window.db.getBookings().filter(b => b.status === 'Active');
+      const cars = window.db.getCars();
+      const customers = window.db.getCustomers();
+      const select = document.getElementById('returnBookingSelect');
+      select.innerHTML = '';
+
+      if (bookings.length === 0) {
+        select.innerHTML = '<option value="">No vehicles currently out on active rental</option>';
+        return;
+      }
+
+      bookings.forEach(b => {
+        const car = cars.find(c => c.car_id == b.car_id);
+        const cust = customers.find(c => c.customer_id == b.customer_id);
+        const opt = document.createElement('option');
+        opt.value = b.booking_id;
+        opt.textContent = `Active Rental #${b.booking_id} - ${car ? car.model : 'Car'} (${car ? car.reg_no : ''})`;
+        select.appendChild(opt);
+      });
+
+      select.addEventListener('change', updateReturnBrief);
+      document.getElementById('returnMileageInput').addEventListener('input', updateReturnCalculations);
+      document.getElementById('returnLateFee').addEventListener('input', updateReturnCalculations);
+
+      updateReturnBrief();
+    }
+
+    function updateReturnBrief() {
+      const bId = document.getElementById('returnBookingSelect').value;
+      if (!bId) return;
+
+      const booking = window.db.getBookings().find(b => b.booking_id == bId);
+      if (!booking) return;
+
+      const car = window.db.getCarById(booking.car_id);
+      document.getElementById('returnBriefBookingId').textContent = `#${booking.booking_id}`;
+      document.getElementById('returnBriefCarImg').src = car ? car.image : '';
+      document.getElementById('returnBriefCarModel').textContent = car ? car.model : '';
+      document.getElementById('returnBriefCarReg').textContent = car ? car.reg_no : '';
+      document.getElementById('returnBriefPickupKm').textContent = `${(booking.pickup_mileage || 15000).toLocaleString()} KM`;
+      document.getElementById('returnBriefBaseAmount').textContent = formatPrice(booking.total_amount);
+
+      // Default return mileage = pickup mileage + 350 km
+      const initial = Number(booking.pickup_mileage || 15000);
+      document.getElementById('returnMileageInput').value = initial + 350;
+      updateReturnCalculations();
+    }
+
+    function updateReturnCalculations() {
+      const bId = document.getElementById('returnBookingSelect').value;
+      const booking = window.db.getBookings().find(b => b.booking_id == bId);
+      if (!booking) return;
+
+      const initial = Number(booking.pickup_mileage || 15000);
+      const returned = Number(document.getElementById('returnMileageInput').value) || initial;
+      const extraFee = Number(document.getElementById('returnLateFee').value) || 0;
+
+      const driven = Math.max(0, returned - initial);
+      document.getElementById('returnDrivenKmDisplay').textContent = `${driven.toLocaleString()} KM Driven`;
+
+      const finalAmount = Number(booking.total_amount) + extraFee;
+      document.getElementById('returnBriefAdjustments').textContent = formatPrice(extraFee);
+      document.getElementById('returnBriefFinalAmount').textContent = formatPrice(finalAmount);
+    }
+
+    function handleReturnSubmit(e) {
+      e.preventDefault();
+      const bId = document.getElementById('returnBookingSelect').value;
+      const mileage = document.getElementById('returnMileageInput').value;
+      const extraFee = Number(document.getElementById('returnLateFee').value) || 0;
+      const paymentMethod = document.getElementById('returnPaymentMethod').value;
+
+      const booking = window.db.getBookings().find(b => b.booking_id == bId);
+      if (!booking) return;
+
+      const finalAmount = Number(booking.total_amount) + extraFee;
+
+      try {
+        window.db.processReturn(bId, mileage, finalAmount, paymentMethod);
+        alert(`Vehicle return finalized! Booking #${bId} marked COMPLETED. Car is released back to AVAILABLE status.`);
+        loadReturnOptions();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
